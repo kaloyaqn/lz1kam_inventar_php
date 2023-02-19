@@ -38,7 +38,7 @@ include "../components/header.php";
 ?>
 
 <div class="container-sm d-flex justify-content-center align-items-center vh-100 flex-column">
-    <h2>Редактиране на запис</h2>
+    <h2>Редактиране на артикул</h2>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <input type="hidden" name="id" value="<?php echo $row["ID"] ?>">
         <div class="form-group">

@@ -1,65 +1,57 @@
 <?php
-// Check if the form has been submitted
-include "../components/header.php";
+require_once("../config.php");
 
-if (isset($_POST['submit'])) {
-    // Retrieve the form data
-    $lice = $_POST['lice'];
-    $broi = $_POST['broi'];
-    $lokaciq = $_POST['lokaciq'];
-    $new_quantity = $_POST['new_quantity'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_POST["id"];
+    $lokaciq = $_POST["lokaciq"];
+    $lice = $_POST["lice"];
+    $broi = $_POST["broi"];
 
-    // Validate the new quantity value
-    if (!is_numeric($new_quantity) || $new_quantity < 0) {
-        $error = "Please enter a valid number for the new quantity.";
+
+    $sql = "UPDATE produkti SET lokaciq='$lokaciq', lice='$lice', broi=$broi WHERE ID=$id";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result) {
+        echo "<script>alert('Успешно обновихте записа.');</script>";
+        header("Location: dashboard.php");
     } else {
-        // Subtract the new quantity from the existing quantity
-        $new_broi = $broi - $new_quantity;
+        echo "<script>alert('Грешка при обновяване на записа.');</script>";
+    }
+} else {
+    $id = $_GET["id"];
 
-        // Build the SQL query to update the database
-        $sql = "UPDATE table_name SET broi = '$new_broi', lice = '$lice', lokaciq = '$lokaciq' WHERE id = '$id'";
+    $sql = "SELECT * FROM produkti WHERE ID=$id";
+    $result = mysqli_query($conn, $sql);
 
-        // Execute the query
-        if (mysqli_query($conn, $sql)) {
-            $success = "Record updated successfully.";
-        } else {
-            $error = "Error updating record: " . mysqli_error($conn);
-        }
-
-        // Close the database connection
-        mysqli_close($conn);
+    if (mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
+    } else {
+        echo "Грешка: Невалиден идентификатор на запис.";
+        exit;
     }
 }
+
+
+include "../components/header.php";
 ?>
 
-<!-- Display any errors or success messages -->
-<?php if (isset($error)): ?>
-    <div class="alert alert-danger" role="alert"><?php echo $error; ?></div>
-<?php endif; ?>
+<div class="container-sm d-flex justify-content-center align-items-center vh-100 flex-column">
+    <h2>Изписване на артикул</h2>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <input type="hidden" name="id" value="<?php echo $row["ID"] ?>">
+        <div class="form-group">
+            <label for="lice">Лице:</label>
+            <input type="text" class="form-control" id="lice" name="lice" value="<?php echo $row["lice"] ?>">
+        </div>
+        <div class="form-group">
+            <label for="lokaciq">Локация:</label>
+            <input type="text" class="form-control" id="lokaciq" name="lokaciq" value="<?php echo $row["lokaciq"] ?>">
+        </div>
+        <div class="form-group">
+            <label for="broi">Брой:</label>
+            <input type="number" class="form-control" id="broi" name="broi" value="<?php echo $row["broi"] ?>">
+        </div>
 
-<?php if (isset($success)): ?>
-    <div class="alert alert-success" role="alert"><?php echo $success; ?></div>
-<?php endif; ?>
 
-<!-- Create the form -->
-<form method="post">
-    <div class="form-group">
-        <label for="lice">Lice:</label>
-        <input type="text" class="form-control" id="lice" name="lice" value="<?php echo $lice; ?>">
-    </div>
-    <div class="form-group">
-        <label for="broi">Broi:</label>
-        <input type="text" class="form-control" id="broi" name="broi" value="<?php echo $broi; ?>" readonly>
-    </div>
-    <div class="form-group">
-        <label for="lokaciq">Lokaciq:</label>
-        <input type="text" class="form-control" id="lokaciq" name="lokaciq" value="<?php echo $lokaciq; ?>">
-    </div>
-    <div class="form-group">
-        <label for="new_quantity">New Quantity:</label>
-        <input type="text" class="form-control" id="new_quantity" name="new_quantity">
-    </div>
-    <button type="submit" class="btn btn-primary" name="submit">Submit</button>
-</form>
-
-<?php include "../components/footer.php"; ?>
+        <button type=submit class="btn btn-success mt-3 w-100" name="submit">Изпиши</button>
+</div>

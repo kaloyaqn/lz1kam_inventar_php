@@ -17,7 +17,9 @@ $(document).ready(function() {
 });
 </script>
 
+<style>
 
+</style>
 
 <div class="container">
     <div class="row mt-5 mb-3">
@@ -57,7 +59,7 @@ $(document).ready(function() {
                 // output data of each row
                 while($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
-                    echo "<td>" . $row["ID"] . "</td>";
+                    echo "<td>" . ("#" . $row["ID"]) . "</td>";
                     echo "<td>" . $row["ime"] . "</td>";
                     echo "<td>" . $row["firma"] . "</td>";
                     echo "<td>" . $row["lokaciq"] . "</td>";
@@ -67,8 +69,9 @@ $(document).ready(function() {
                     echo "<td>" . ($row["stoinost"] ? $row["stoinost"] . " лв." : "") . "</td>";
                     echo "<td>" . ($row["obshto"] ? $row["obshto"] . " лв." : "") . "</td>";
                     echo "<td>" . $row["datetime"] . "</td>";
-                    echo '<td><a href="edit.php?id=' . $row["ID"] . '" class="btn btn-warning">Редактирай</a> ';
-                    echo '<a href="delete.php?id=' . $row["ID"] . '" class="btn btn-danger">Изтрий</a></td>';            
+                    echo '<td><a href="edit.php?id=' . $row["ID"] . '" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></a> ';
+                    echo '<a href="delete.php?id=' . $row["ID"] . '" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>';            
+                    echo '<a href="given.php?id=' . $row["ID"] . '" class="btn btn-success ikona"><i class="bi bi-receipt"></i></a></td>';            
                     echo "</tr>";
                 }
             } else {

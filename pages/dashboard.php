@@ -1,11 +1,20 @@
 <?php include "../components/header.php"; require_once("../config.php"); ?>
 
 <script>
-function redirectToPage() {
+
+
+function DobaviProdukt() {
   window.location = "create.php";
 }
 
-
+$(document).ready(function() {
+  $("#search").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("tbody tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
 </script>
 
 
@@ -13,12 +22,13 @@ function redirectToPage() {
 <div class="container">
     <div class="row mt-5 mb-3">
     <div class="col-sm-1">
-        <button type="button" class="btn btn-primary" onclick="redirectToPage()">Добави</button>
+        <button type="button" class="btn btn-primary" onclick="DobaviProdukt()">Добави</button>
         </div>
         <div class="col-sm-11">
-        <input type="text" class="form-control" placeholder="Потърси...">
+            <div class="input-group">
+                <input type="text" id="search" class="form-control" placeholder="Потърси...">
+            </div>
         </div>
-
     </div>
     <table class="table table-striped table-bordered">
         <thead>

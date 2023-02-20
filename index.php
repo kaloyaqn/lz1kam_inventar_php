@@ -16,22 +16,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "
         <div class='alert alert-danger' role='alert'>
-        Грешно потребителско име или парола! Моля върнете се обратно или опитайте по-късно.
+        Грешно потребителско име или парола!.
         </div>
-
-        <button class='btn btn-primary w-100'><a class='text-white text-decoration-none' href='index.php'>Върни се обратно</a></button>
         ";        }
 }
 
 mysqli_close($conn);
 ?>
 
-    <div class="container-sm vh-100 d-flex justify-content-center align-items-center">
-        <form action="login.php" method="post">
-            <label for="username" class="form-label">Потребителско име:</label>
+    <div class="container-sm vh-100 d-flex justify-content-center align-items-center flex-column">
+        <h1 class="mb-5">Вход</h1>
+        <form method="post">
+            <label for="username">Потребителско име:</label>
             <input type="text" class="form-control" name="username">
-            <br>
-            <label for="password" class="form-label">Парола:</label>
+            <label for="password">Парола:</label>
             <input type="password" class="form-control mb-3" name="password">
 
             <button type="submit" class="btn btn-primary w-100">Влез</button>

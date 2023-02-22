@@ -10,15 +10,32 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
     <style>
+
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
       .ikona {
         margin-left: 4px;
       }
+
+      .page-title {
+        font-size:2.5rem;
+        text-align:center;
+      }
+
+      .efekt {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    }
+
+    .efekt.show {
+        opacity: 1;
+    }
+
     </style>
   </head>
 <body>
-<nav class="navbar bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">LZ1KAM - ИНВЕНТАР</a>
-  </div>
-</nav>
 

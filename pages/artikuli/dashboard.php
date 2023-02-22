@@ -1,7 +1,10 @@
-<?php include "../components/header.php"; require_once("../config.php"); 
+<?php 
+require_once("../../login-check.php");
+include "../../components/header.php"; 
+require_once("../../config.php"); 
 
 
-$sql = "SELECT ID, ime, firma, lokaciq,lice, date, broi, stoinost, obshto, datetime,total_cena, total_produkti FROM produkti";
+$sql = "SELECT ID, ime, firma, lokaciq,lice, date, broi, stoinost, obshto, datetime,total_cena, total_produkti FROM produkti ORDER BY ID DESC";
 $result = mysqli_query($conn, $sql);
 $izvedi = mysqli_fetch_assoc($result);
 $total_cena = $izvedi['total_cena'];
@@ -31,21 +34,18 @@ $(document).ready(function() {
 
 </style>
 
-<h1 class="text-center">АРТИКУЛИ</h1>
-<div class="container">
-    <div class="row mt-3">
-        <div class="col-md-6">
-            <a class="btn btn-success" href="izdadeni/index.php">Издадени</a>
-        </div>
-        <div class="col-md-6">
-                <!--
-                                <h5>Капитал: <?php echo $total_cena . " лв. "; ?></h5> 
-            <h5>Брой артикули: <?php echo $total_produkti . " бр. "; ?></h5> 
-                -->
-        </div>
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">LZ1KAM - ИНВЕНТАР</a>
+    <div>
+        <a class="btn btn-primary" href="../izdadeni/index.php">Издадени</a>
+        <a href="../logout.php" class="btn btn-danger">Изход</a>
     </div>
-</div>
+  </div>
+</nav>
 
+
+<b class="page-title d-flex justify-content-center mt-3">АРТИКУЛИ</b>
 <div class="container">
     <div class="row mt-5 mb-3">
     <div class="col-sm-1">
@@ -94,8 +94,8 @@ $(document).ready(function() {
                     echo "<td>" . ($row["obshto"] ? $row["obshto"] . " лв." : "") . "</td>";
                     echo "<td>" . $row["datetime"] . "</td>";
                     echo '<td><a href="edit.php?id=' . $row["ID"] . '" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></a> ';
-                    echo '<a href="delete.php?id=' . $row["ID"] . '" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>';            
-                    echo '<a href="given.php?id=' . $row["ID"] . '" class="btn btn-success ikona"><i class="bi bi-receipt"></i></a></td>';            
+                    echo '<a href="given.php?id=' . $row["ID"] . '" class="btn btn-success"><i class="bi bi-receipt"></i></a>';            
+                    echo '<a href="delete.php?id=' . $row["ID"] . '" class="btn btn-danger ikona"><i class="bi bi-trash3-fill"></i></a></td>';            
                     echo "</tr>";
                 }
             } else {
@@ -108,4 +108,4 @@ $(document).ready(function() {
 
 
 
-<?php include "../components/footer.php" ?>
+<?php include "../../components/footer.php" ?>

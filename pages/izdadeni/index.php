@@ -1,14 +1,8 @@
-<?php include "../components/header.php"; require_once("../config.php"); 
-
-
-$sql = "SELECT ID, ime, firma, lokaciq,lice, date, broi, stoinost, obshto, datetime,total_cena, total_produkti FROM produkti";
-$result = mysqli_query($conn, $sql);
-$izvedi = mysqli_fetch_assoc($result);
-$total_cena = $izvedi['total_cena'];
-$total_produkti = $izvedi['total_produkti'];
-
-
-?>
+<?php
+include "../../components/header.php"; 
+require_once("../../config.php"); 
+require_once("../../login-check.php");
+ ?>
 
 <script>
 
@@ -31,11 +25,21 @@ $(document).ready(function() {
 
 </style>
 
-<h1 class="text-center">АРТИКУЛИ</h1>
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">LZ1KAM - ИНВЕНТАР</a>
+    <div>
+    <a class="btn btn-primary" href="../artikuli/dashboard.php">Артикули</a>
+        <a href="../logout.php" class="btn btn-danger">Изход</a>
+    </div>
+  </div>
+</nav>
+
+<b class="page-title d-flex justify-content-center mt-3">ИЗДАДЕНИ</b>
+
 <div class="container">
     <div class="row mt-3">
         <div class="col-md-6">
-            <a class="btn btn-success" href="izdadeni/index.php">Издадени</a>
         </div>
         <div class="col-md-6">
                 <!--
@@ -45,13 +49,9 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
-
 <div class="container">
     <div class="row mt-5 mb-3">
-    <div class="col-sm-1">
-        <button type="button" class="btn btn-primary" onclick="DobaviProdukt()">Добави</button>
-        </div>
-        <div class="col-sm-11">
+        <div class="col-sm-12">
             <div class="input-group">
                 <input type="text" id="search" class="form-control" placeholder="Потърси...">
             </div>
@@ -77,25 +77,24 @@ $(document).ready(function() {
         <tbody>
             <?php 
 
-
+            $sql = "SELECT izdadeno_id,izdadeno_ime,izdadeno_lokaciq,izdadeno_firma,izdadeno_lice,izdadeno_date,izdadeno_broi,izdadeno_stoinost,izdadeno_obshto,izdadeno_datetime FROM izdadeni";
+            $result = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($result) > 0) {
                 // output data of each row
                 while($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
-                    echo "<td>" . ("#" . $row["ID"]) . "</td>";
-                    echo "<td>" . $row["ime"] . "</td>";
-                    echo "<td>" . $row["firma"] . "</td>";
-                    echo "<td>" . $row["lokaciq"] . "</td>";
-                    echo "<td>" . $row["lice"] . "</td>";
-                    echo "<td>" . $row["date"] . "</td>";
-                    echo "<td>" . ($row["broi"] ? $row["broi"] . " бр." : "") . "</td>";
-                    echo "<td>" . ($row["stoinost"] ? $row["stoinost"] . " лв." : "") . "</td>";
-                    echo "<td>" . ($row["obshto"] ? $row["obshto"] . " лв." : "") . "</td>";
-                    echo "<td>" . $row["datetime"] . "</td>";
-                    echo '<td><a href="edit.php?id=' . $row["ID"] . '" class="btn btn-warning"><i class="bi bi-pencil-fill"></i></a> ';
-                    echo '<a href="delete.php?id=' . $row["ID"] . '" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>';            
-                    echo '<a href="given.php?id=' . $row["ID"] . '" class="btn btn-success ikona"><i class="bi bi-receipt"></i></a></td>';            
+                    echo "<td>" . ("#" . $row["izdadeno_id"]) . "</td>";
+                    echo "<td>" . $row["izdadeno_ime"] . "</td>";
+                    echo "<td>" . $row["izdadeno_firma"] . "</td>";
+                    echo "<td>" . $row["izdadeno_lokaciq"] . "</td>";
+                    echo "<td>" . $row["izdadeno_lice"] . "</td>";
+                    echo "<td>" . $row["izdadeno_date"] . "</td>";
+                    echo "<td>" . ($row["izdadeno_broi"] ? $row["izdadeno_broi"] . " бр." : "") . "</td>";
+                    echo "<td>" . ($row["izdadeno_stoinost"] ? $row["izdadeno_stoinost"] . " лв." : "") . "</td>";
+                    echo "<td>" . ($row["izdadeno_obshto"] ? $row["izdadeno_obshto"] . " лв." : "") . "</td>";
+                    echo "<td>" . $row["izdadeno_datetime"] . "</td>";
+                    echo '<td class="d-flex justify-content-center"><a href="delete.php?id=' . $row["izdadeno_id"] . '" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a></td>';         
                     echo "</tr>";
                 }
             } else {
@@ -106,6 +105,4 @@ $(document).ready(function() {
     </table>
 </div>
 
-
-
-<?php include "../components/footer.php" ?>
+<?php include "../../components/footer.php" ?>

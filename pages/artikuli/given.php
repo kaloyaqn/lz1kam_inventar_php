@@ -1,5 +1,8 @@
 <?php
-require_once("../config.php");
+require_once("../../config.php");
+require_once("../../login-check.php");
+include "../../components/header.php";
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST["id"];
@@ -38,8 +41,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 
-include "../components/header.php";
 ?>
+
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">LZ1KAM - ИНВЕНТАР</a>
+    <a href="../logout.php" class="btn btn-danger">Изход</a>
+  </div>
+</nav>
+
 
 <div class="container-sm d-flex justify-content-center align-items-center vh-100 flex-column">
     <h2>Изписване на артикул: <b><?php echo $row["ime"] ?></b></h2>

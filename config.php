@@ -10,4 +10,5 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Грешка при свързване с датабазата: " . $conn->connect_error);
   } 
+
 ?>

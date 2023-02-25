@@ -1,7 +1,9 @@
 <?php
+session_start();
 require_once("../../config.php");
 require_once("../../login-check.php");
 include "../../components/header.php";
+
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

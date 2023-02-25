@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "../../components/header.php"; 
 require_once("../../config.php"); 
 require_once("../../login-check.php");

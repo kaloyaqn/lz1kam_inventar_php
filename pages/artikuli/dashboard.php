@@ -3,47 +3,76 @@ require_once("../../login-check.php");
 include "../../components/header.php"; 
 require_once("../../config.php"); 
 
+$isAdmin = false;
+if (isset($_SESSION["role"]) && $_SESSION["role"] === "admin") {
+    $isAdmin = true;
+}
+
+$username = $_SESSION['username'];
 
 $sql = "SELECT ID, ime, firma, lokaciq,lice, date, broi, stoinost, obshto, datetime,total_cena, total_produkti FROM produkti ORDER BY ID DESC";
 $result = mysqli_query($conn, $sql);
 $izvedi = mysqli_fetch_assoc($result);
 $total_cena = $izvedi['total_cena'];
 $total_produkti = $izvedi['total_produkti'];
-
-
 ?>
+  
+  <div class="d-flex sidebar flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <span class="fs-4">LZ1KAM</span>
+      </a>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="#" class="nav-link active" aria-current="page">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+            Артикули
+          </a>
+        </li>
+        <li>
+          <a href="../izdadeni/index.php" class="nav-link link-dark">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+            Издадени
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nav-link link-dark">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+            Потребители
+          </a>
+        </li>
+      </ul>
+      <hr>
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+          <strong><?php echo "$username"?></strong>
+        </a>
+        <ul class="dropdown-menu text-small shadow">
+          <li><a class="dropdown-item" href="#">New project...</a></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Sign out</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-<script>
 
-
-function DobaviProdukt() {
-  window.location = "create.php";
-}
-
-$(document).ready(function() {
-  $("#search").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("tbody tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-</script>
-
-<style>
-
-</style>
-
-<nav class="navbar bg-body-tertiary">
+<!--<nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">LZ1KAM - ИНВЕНТАР</a>
     <div>
         <a class="btn btn-primary" href="../izdadeni/index.php">Издадени</a>
+        <?php if ($isAdmin): ?>
+        <a class="btn btn-success" href="create.php">Добави потребител</a>
+        <?php endif; ?>
         <a href="../logout.php" class="btn btn-danger">Изход</a>
     </div>
   </div>
 </nav>
-
+        -->
 
 <b class="page-title d-flex justify-content-center mt-3">АРТИКУЛИ</b>
 <div class="container">
@@ -76,9 +105,6 @@ $(document).ready(function() {
         </thead>
         <tbody>
             <?php 
-
-
-
             if (mysqli_num_rows($result) > 0) {
                 // output data of each row
                 while($row = mysqli_fetch_assoc($result)) {

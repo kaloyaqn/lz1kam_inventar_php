@@ -1,4 +1,6 @@
 <?php 
+session_start();
+
 require_once("../../login-check.php");
 require_once("../../config.php");
 
